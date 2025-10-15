@@ -1,0 +1,90 @@
+@import "./variables";
+
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  background-color: $bg-light;
+  color: $text-color;
+}
+
+.header {
+  background: $primary-color;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    font-weight: 500;
+  }
+}
+
+.products {
+min-height: 75vh;
+padding: 2rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+  h2 {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .product-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    text-align: center;
+    width: 220px;
+
+    img {
+      max-width: 100%;
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+  }
+}
+
+.footer {
+  background: $primary-color;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+//Mobile Design
+@media (max-width: 768px) {
+    .products{
+    min-height: auto;
+    }
+  .product-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header nav {
+    margin-top: 0.5rem;
+  }
+}

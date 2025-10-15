@@ -1,0 +1,28 @@
+import ProductCard from "../components/ProductCard";
+
+const dummyProducts = [
+  { id: 1, name: "iPhone 17", price: 99, image: "https://m.media-amazon.com/images/I/716Bo6d914L._AC_SL1500_.jpg" },
+  { id: 2, name: "Galaxy S25 Ultra", price: 49, image: "https://m.media-amazon.com/images/I/61wRxkTFZhL._AC_SY300_SX300_QL70_ML2_.jpg" },
+  { id: 3, name: "Google Pixel 9", price: 199, image: "https://m.media-amazon.com/images/I/51rBmPsvC+L._AC_SX300_SY300_QL70_ML2_.jpg" },
+  { id: 4, name: "OnePlus 12", price: 89, image: "https://m.media-amazon.com/images/I/71o8VehMHXL._AC_SY300_SX300_QL70_ML2_.jpg" },
+  { id: 5, name: "Xiaomi 14 Pro", price: 79, image: "https://m.media-amazon.com/images/I/61WboUKXp2L._AC_SY300_SX300_QL70_ML2_.jpg" },
+  { id: 6, name: "Sony Xperia 1 V", price: 120, image: "https://m.media-amazon.com/images/I/71XwFAUiIcL._AC_SY300_SX300_QL70_ML2_.jpg" },
+  { id: 7, name: "Huawei P60 Pro", price: 95, image: "https://m.media-amazon.com/images/I/71JlgLiugdL._AC_SY300_SX300_QL70_ML2_.jpg" },
+  { id: 8, name: "Nothing Phone 2", price: 85, image: "https://m.media-amazon.com/images/I/51K+qyuOXjL._AC_SY300_SX300_QL70_ML2_.jpg" },
+  { id: 9, name: "Motorola Edge 40", price: 59, image: "https://m.media-amazon.com/images/I/71RVcSlL8aL._AC_SY300_SX300_QL70_ML2_.jpg" },
+  { id: 10, name: "Asus Zenfone 10", price: 110, image: "https://m.media-amazon.com/images/I/41rzoeSHMiL._AC_SY879_.jpg" },
+];
+
+
+export default function Products() {
+  return (
+    <main className="products">
+      <h2>Available Products</h2>
+      <div className="product-list">
+        {dummyProducts.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
+      </div>
+    </main>
+  );
+}
