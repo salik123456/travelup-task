@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import "../styles/Products.scss";
 import { api } from "../utils/api";
 import { useProducts } from "../context/ProductContext";
+import { notifyError} from "../utils/toast";
+
 
 export default function Products() {
   const {
