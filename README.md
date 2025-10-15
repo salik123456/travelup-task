@@ -1,16 +1,97 @@
-# React + Vite
+It is a simple React-based Single Page Application (SPA) designed for managing products.
+It allows users to add, edit, delete, and view products with live updates. The application uses React Context API for state management and a mock API powered by JSON Server for backend simulation.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The project demonstrates clean component architecture, API integration, and integration testing using Jest.
 
-Currently, two official plugins are available:
+Setup Instructions
+1. Clone the repository
+git clone https://github.com/salik123456/travelup-task/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Install dependencies
+npm install
 
-## React Compiler
+3. Run the application
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This command runs both the React app and the JSON Server concurrently.
 
-## Expanding the ESLint configuration
+npm run dev
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+Once started:
+
+React app will be available at →  http://localhost:5173/
+
+Mock API (JSON Server) will run at → http://localhost:5001 (it can be changed)
+
+Mock API Configuration
+
+The mock API uses a local db.json file located in the project root.
+
+Example structure:
+
+[
+  {
+    "id": "1",
+    "name": "iPhone 17",
+    "price": 99,
+    "image": "https://m.media-amazon.com/images/I/716Bo6d914L._AC_SL1500_.jpg"
+  },
+  {
+    "id": "2",
+    "name": "Galaxy S25 Ultra",
+    "price": 49,
+    "image": "https://m.media-amazon.com/images/I/61wRxkTFZhL._AC_SY300_SX300_QL70_ML2_.jpg"
+  }
+]
+
+Testing
+
+Integration tests are written using Jest and React Testing Library.
+
+To run all tests:
+
+npm test
+
+
+The test suite covers:
+
+Adding a new product
+
+Editing product details
+
+Deleting a product
+
+Validating input fields
+
+All test cases should pass successfully before submission.
+
+
+Code Structure
+
+src/
+├── components/
+│   └── ProductCard.jsx        # Renders individual product cards
+├── context/
+│   └── ProductContext.jsx     # Global state using React Context API
+├── pages/
+│   └── Products.jsx           # Main page with all product operations
+├── utils/
+│   ├── api.js                 # Axios instance and API base configuration
+│   └── toast.js               # Toast notifications for user feedback
+├── _tests_/
+│   └── Products.test.jsx      # Integration tests
+└── styles/
+    └── Products.scss          # Styling for product UI
+
+
+Design Choices
+
+React Context API was used for lightweight and scalable state management.
+
+Axios provides clean HTTP requests with a reusable API instance.
+
+JSON Server simulates backend CRUD operations for realistic data flow.
+
+Jest + React Testing Library ensures UI and logic consistency through integration testing.
+
+Clean folder structure for readability and maintainability.
