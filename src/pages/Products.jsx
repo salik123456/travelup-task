@@ -1,13 +1,19 @@
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
-import '../styles/Products.scss'
+import "../styles/Products.scss";
 import { api } from "../utils/api";
-import { notifySuccess, notifyInfo } from "../utils/toast";
+import { useProducts } from "../context/ProductContext";
 
 export default function Products() {
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(false);
-
+  const {
+    products,
+    loading,
+    setProducts,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+    setLoading,
+  } = useProducts();
 
   useEffect(() => {
     const load = async () => {
@@ -15,6 +21,8 @@ export default function Products() {
       try {
         const res = await api.get("/");
         setProducts(res.data);
+      } catch (err) {
+        notifyError("⚠️ Failed to fetch products.");
       } finally {
         setLoading(false);
       }
@@ -26,31 +34,33 @@ export default function Products() {
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: "",
-    image: ""
+    image: "",
   });
 
   // this is for adding any new product
- const handleAddProduct = async () => {
-    if (!newProduct.name.trim() || !newProduct.price || isNaN(newProduct.price)) {
-      notifyInfo("Please enter a valid name and numeric price.");
+  const handleAddProduct = async () => {
+    if (!newProduct.name.trim() || !newProduct.price) {
+      notifyError("Please enter valid name and price.");
       return;
     }
-    const payload = {
-      name: newProduct.name.trim(),
+    await addProduct({
+      ...newProduct,
       price: parseFloat(newProduct.price),
-      image: newProduct.image.trim() || "https://via.placeholder.com/150",
-    };
-    const res = await api.post("/", payload);
-    setProducts((p) => [...p, res.data]);
+      image: newProduct.image || "https://via.placeholder.com/150",
+    });
     setNewProduct({ name: "", price: "", image: "" });
-    notifySuccess("Product added");
   };
 
   // this is for Delete product
   const handleDelete = async (id) => {
-  await api.delete(`/${id}`);
-    setProducts((p) => p.filter((x) => x.id !== id));
-    notifyInfo("Product deleted");
+    try {
+      setLoading(true);
+      deleteProduct(id);
+    } catch {
+      notifyError("Failed to delete product");
+    } finally {
+      setLoading(false);
+    }
   };
 
   //this to edit produuct
@@ -61,19 +71,18 @@ export default function Products() {
     setEditData(product);
   };
 
-
   //this is for save product
- const handleSave = async () => {
-    if (!editData.name.trim() || !editData.price || isNaN(editData.price)) {
-      notifyInfo("Please enter valid name and price.");
+  const handleSave = async () => {
+    if (!editData.name.trim() || !editData.price) {
+      notifyError("Please enter valid name and price.");
       return;
     }
-    const payload = { ...editData, price: parseFloat(editData.price) };
-    const res = await api.put(`/${editId}`, payload);
-    setProducts((p) => p.map((it) => (it.id === editId ? res.data : it)));
+    await updateProduct(editId, {
+      ...editData,
+      price: parseFloat(editData.price),
+    });
     setEditId(null);
     setEditData({ name: "", price: "", image: "" });
-    notifySuccess("Product updated");
   };
 
   return (
@@ -108,7 +117,17 @@ export default function Products() {
       </div>
       <div className="product-list">
         {products.map((p) => (
-          <ProductCard key={p.id} product={p} onDelete={handleDelete} editId={editId} onEdit={handleEdit} onSave={handleSave} setEditId={setEditId}   editData={editData} setEditData={setEditData} />
+          <ProductCard
+            key={p.id}
+            product={p}
+            onDelete={handleDelete}
+            editId={editId}
+            onEdit={handleEdit}
+            onSave={handleSave}
+            setEditId={setEditId}
+            editData={editData}
+            setEditData={setEditData}
+          />
         ))}
       </div>
     </main>
